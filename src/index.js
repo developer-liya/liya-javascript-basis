@@ -1,3 +1,5 @@
 
+// 引入es2020语法
+import ES2020 from './js/es10/index';
 
-console.log(99999)
+ES2020();

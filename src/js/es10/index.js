@@ -3,6 +3,7 @@
  * 参考文章：
  * https://juejin.im/post/5eba14d1e51d4540bb61748d
  * https://zhuanlan.zhihu.com/p/109120813
+ * https://zhuanlan.zhihu.com/p/133658121
  */
 
 /**
@@ -164,6 +165,70 @@ const bigIntFC = () => {
     JSON.stringify({ a: BigInt(1).toString() })
 
 }
+
+// import()
+const importFc = () => {
+    // 动态import 加载组件
+
+    let filename = 'util.js';
+    import('./components/' + filename).then(({ counter, incCounter }) => {
+        console.log(counter); //3
+        incCounter();
+        console.log(counter); //3
+    });
+}
+
+// import.meta
+const importMetaFC = () => {
+    // import.meta是由 ECMAScript 创建实现的，默认为 null。
+
+    // 考虑一下这个模块，module.js：
+
+    // <script type="module" src="module.js"></script>
+    // 你可以通过 import.meta对象访问模块的相关 meta 信息：
+
+    // console.log(import.meta); // { url: "file:///home/user/module.js" }
+
+}
+
+// export new nameSpace 
+const importExportFC = () => {
+    // 它允许开发者以新名称导出另一模块的命名空间外部对象。
+    // export * as nameSpace from "mod"
+}
+
+// String.prototype.matchAll 
+const matchAllFC = () => {
+    // match() 方法
+    const text = "From 2019.01.29 to 2019.01.30";
+    const regexp = /(?<year>\d{4}).(?<month>\d{2}).(?<day>\d{2})/gu;
+    const results = text.match(regexp);
+    console.log(results);
+    // [ '2019.01.29', '2019.01.30' ]
+
+    // 它返回了远比 match() 多得多的信息——它返回的迭代器不仅包括精确的匹配结果，还有全部的正则模式捕获结果
+    // matchAll() 方法完美实现了命名捕获组
+    const results1 = Array.from(text.matchAll(regexp));
+    console.log(results1);
+}
+
+// promise.allSettled
+const promiseAllSettled = () => {
+    // 自从 ECMAScript ES2015 支持了仅有的两个 promise 连接符：Promise.all() 和 Promise.race() 以来，
+    // 我们终于迎来了 Promise.allSettled(), 感谢 Jason Williams,
+    //  Robert Pamely 和 Mathias Bynens.它可以用在处理所有的 promise 都 settled 的情况，
+    //  无论结果是 fulfilled 还是 rejected.你看 ，无需 catch!
+    Promise.allSettled([
+        fetch("https://api.github.com/users/pawelgrzybek").then(data => data.json()),
+        fetch("https://api.github.com/users/danjordan").then(data => data.json())
+    ])
+        .then(result => {
+            console.log(`All profile settled`)
+            console.log(result)
+        });
+}
+
+
 const ES2020 = () => {
     // 可选链操作符
     // OptionalChainingFC()
@@ -176,7 +241,17 @@ const ES2020 = () => {
 
 
     // BigInt
-    bigIntFC()
+    // bigIntFC()
+
+    // import 
+    // importFc()
+
+    // matchAll
+    // matchAllFC()
+
+    // Promist.allSettled
+    promiseAllSettled();
+
 
 }
 
